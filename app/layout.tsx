@@ -4,19 +4,19 @@ import "../styles/contrast-fixes.css"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://reub-elec.vercel.app'),
-  title: "Reubi Elec",
+  metadataBase: new URL('https://cajademedidordeluz.com'),
+  title: "Reubi Elec: Servicios de Medidores de Luz",
   description: "Bienvenido a Reubi Elec, disfruta nuestros servicios.",
   icons: {
     icon: "/images/Favicon.ico",
   },
   generator: 'Next.js',
   openGraph: {
-    title: "Reubi Elec",
+    title: "Reubi Elec: Servicios de Medidores de Luz",
     description: "Bienvenido a Reubi Elec, disfruta nuestros servicios.",
     images: [
       {
-        url: "/images/imagen%20destacada.png",
+        url: "/images/Imagen destacada.png",
         width: 1200,
         height: 630,
         alt: 'Reubi Elec - Especialistas en instalaciones eléctricas',
@@ -25,14 +25,15 @@ export const metadata: Metadata = {
     locale: 'es_EC',
     type: 'website',
     siteName: 'Reubi Elec',
+    url: 'https://cajademedidordeluz.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Reubi Elec",
+    title: "Reubi Elec: Servicios de Medidores de Luz",
     description: "Bienvenido a Reubi Elec, disfruta nuestros servicios.",
     images: [
       {
-        url: "/images/imagen%20destacada.png",
+        url: "/images/Imagen destacada.png",
         width: 1200,
         height: 630,
         alt: 'Reubi Elec - Especialistas en instalaciones eléctricas',
