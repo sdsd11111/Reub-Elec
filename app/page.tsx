@@ -370,7 +370,7 @@ export default function Home() {
 
           {/* Content */}
           <div className="container max-w-screen-xl mx-auto px-4 text-center relative z-10 pt-16 md:pt-24">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-extrabold mb-8 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-extrabold mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] leading-tight" style={{ color: '#FFFFFF' }}>
               Soluciones en <span className="whitespace-nowrap">Medidores de Luz</span> <span className="whitespace-nowrap">en Loja</span>
             </h1>
             <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-white/90">
@@ -881,11 +881,11 @@ export default function Home() {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">UBICACIÓN FÍSICA</h3>
                       <p className="text-black mb-3">
-                        Estamos junto a la EERSSA, calle Rocafuerte entre Olmedo y Juan José Peña, Loja, Ecuador.
-                        <span className="block text-sm text-gray-800 mt-1">(Referencia: Edificio Radio Luz y Vida)</span>
+                        Rocafuerte entre Olmedo y Juan Jose Peña, Loja, Ecuador 162-30
+                        <span className="block text-sm text-gray-800 mt-1">(Referencia: Junto a la EERSSA, Edificio Radio Luz y Vida)</span>
                       </p>
                       <a 
-                        href="https://maps.app.goo.gl/bchRSYV3vRmSZXhz7" 
+                        href="https://maps.app.goo.gl/8FRuW5WTBLXmJwFo8" 
                         className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -1023,8 +1023,8 @@ export default function Home() {
               <div className="relative w-full px-2 md:px-8">
                 <div className="relative" style={{ paddingBottom: '40%' }}>
                   <div className="absolute inset-0 rounded-2xl shadow-2xl overflow-hidden mx-auto w-full">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.682123456789!2d-79.01380053060126!3d-2.8854484604457475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwNTMnMDcuNiJTIDc5wrAwMScwOS43Ilc!5e0!3m2!1ses!2sec!4v1620000000000!5m2!1ses!2sec&markers=color:red%7C-2.8854485%2C-79.0138005"
+                    <iframe 
+                      src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d329.0845620404659!2d-79.19947582073458!3d-3.997935591703735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRocafuerte%20entre%20Olmedo%20y%20Juan%20Jose%20Pe%C3%B1a%2C%20Loja%2C%20Ecuador%20162-30!5e1!3m2!1ses-419!2sec!4v1754535941318!5m2!1ses-419!2sec" 
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
