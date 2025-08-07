@@ -18,6 +18,90 @@ export default function Home() {
   const [mobileTestimonialIndex, setMobileTestimonialIndex] = useState(0)
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [currentCardIndex, setCurrentCardIndex] = useState(0)
+  const sliderRef = useRef<HTMLDivElement>(null)
+  
+  // Lightbox state for each service
+  const [lightboxState, setLightboxState] = useState({
+    isOpen: false,
+    currentImageIndex: 0,
+    currentCategory: null as keyof typeof categoryImages | null,
+    images: [] as {src: string, alt: string}[]
+  })
+  
+  // Function to open lightbox with a specific image from a category
+  const openLightbox = (category: keyof typeof categoryImages, index: number) => {
+    setLightboxState({
+      isOpen: true,
+      currentImageIndex: index,
+      currentCategory: category,
+      images: [...categoryImages[category]]
+    })
+    document.body.style.overflow = 'hidden' // Prevent scrolling when lightbox is open
+  }
+  
+  // Function to close lightbox
+  const closeLightbox = () => {
+    setLightboxState(prev => ({
+      ...prev,
+      isOpen: false
+    }))
+    document.body.style.overflow = 'auto' // Re-enable scrolling
+  }
+  
+  // Function to navigate between images in the current category
+  const navigateLightbox = (direction: 'prev' | 'next') => {
+    if (!lightboxState.currentCategory) return
+    
+    const currentIndex = lightboxState.currentImageIndex
+    const totalImages = lightboxState.images.length
+    let newIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1
+    
+    // Handle boundaries within the current category
+    if (newIndex >= totalImages) {
+      newIndex = 0 // Loop to first image
+    } else if (newIndex < 0) {
+      newIndex = totalImages - 1 // Loop to last image
+    }
+    
+    setLightboxState(prev => ({
+      ...prev,
+      currentImageIndex: newIndex
+    }))
+  }
+  
+  // Function to navigate to a specific image in the current category
+  const goToImage = (index: number) => {
+    setLightboxState(prev => ({
+      ...prev,
+      currentImageIndex: index
+    }))
+  }
+  
+  // Handle keyboard events for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxState.isOpen) return
+      
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox()
+          break
+        case 'ArrowRight':
+          navigateLightbox('next')
+          break
+        case 'ArrowLeft':
+          navigateLightbox('prev')
+          break
+      }
+    }
+    
+    window.addEventListener('keydown', handleKeyDown)
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [lightboxState.isOpen, lightboxState.currentImageIndex])
 
   // Referencias para los sliders táctiles
   const sliderRefs = {
@@ -57,25 +141,64 @@ export default function Home() {
   const categoryImages = {
     // Medidores de luz digitales y convencionales
     alimentaria: [
-      { src: "/images/Medidores de luz digitales y convencionales 1.jpeg", alt: "Instalación de medidor convencional" },
-      { src: "/images/Medidores de luz digitales y convencionales 2.jpeg", alt: "Medidor convencional instalado" },
-      { src: "/images/Medidores de luz digitales y convencionales 3.jpeg", alt: "Instalación profesional de medidor" },
-      { src: "/images/Medidores de luz digitales y convencionales 4.jpeg", alt: "Trabajo en cuadro de medidores" },
+      { 
+        src: "/images/Medidores de luz digitales y convencionales 1.jpeg", 
+        alt: "Instalación de medidor convencional" 
+      },
+      { 
+        src: "/images/Medidores de luz digitales y convencionales 2.jpeg", 
+        alt: "Medidor convencional instalado" 
+      },
+      { 
+        src: "/images/Medidores de luz digitales y convencionales 3.jpeg", 
+        alt: "Instalación profesional de medidor" 
+      },
+      { 
+        src: "/images/Medidores de luz digitales y convencionales 4.jpeg", 
+        alt: "Trabajo en cuadro de medidores" 
+      },
     ],
     // Medidores de luz recargables e inteligentes
     hogar: [
-      { src: "/images/Medidores de luz recargables e inteligentes 1.jpeg", alt: "Medidor recargable moderno" },
-      { src: "/images/Medidores de luz recargables e inteligentes 2.jpeg", alt: "Instalación de medidor inteligente" },
-      { src: "/images/Medidores de luz recargables e inteligentes 3.jpg", alt: "Sistema de medición recargable" },
-      { src: "/images/Medidores de luz recargables e inteligentes 4.jpeg", alt: "Panel de control de medidor inteligente" },
+      { 
+        src: "/images/Medidores de luz recargables e inteligentes 1.jpeg", 
+        alt: "Medidor recargable moderno" 
+      },
+      { 
+        src: "/images/Medidores de luz recargables e inteligentes 2.jpeg", 
+        alt: "Instalación de medidor inteligente" 
+      },
+      { 
+        src: "/images/Medidores de luz recargables e inteligentes 3.jpg", 
+        alt: "Sistema de medición recargable" 
+      },
+      { 
+        src: "/images/Medidores de luz recargables e inteligentes 4.jpeg", 
+        alt: "Panel de control de medidor inteligente" 
+      },
     ],
     // Cajas para agua potable, TV y telecomunicaciones
     hospitalaria: [
-      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 1.jpeg", alt: "Caja de distribución para servicios" },
-      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 2.jpeg", alt: "Instalación de caja de servicios" },
-      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 3.jpeg", alt: "Caja de distribución organizada" },
-      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 4.jpeg", alt: "Instalación profesional de cajas" },
-      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 5.jpeg", alt: "Sistema de distribución completo" },
+      { 
+        src: "/images/Cajas para agua potable, TV y telecomunicaciones 1.jpeg", 
+        alt: "Caja de distribución para servicios" 
+      },
+      { 
+        src: "/images/Cajas para agua potable, TV y telecomunicaciones 2.jpeg", 
+        alt: "Instalación de caja de servicios" 
+      },
+      { 
+        src: "/images/Cajas para agua potable, TV y telecomunicaciones 3.jpeg", 
+        alt: "Caja de distribución organizada" 
+      },
+      { 
+        src: "/images/Cajas para agua potable, TV y telecomunicaciones 4.jpeg", 
+        alt: "Instalación profesional de cajas" 
+      },
+      { 
+        src: "/images/Cajas para agua potable, TV y telecomunicaciones 5.jpeg", 
+        alt: "Sistema de distribución completo" 
+      },
     ],
   }
 
@@ -183,6 +306,18 @@ export default function Home() {
     setMobileTestimonialIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
   }
 
+  const scrollToCard = (index: number) => {
+    const slider = sliderRef.current
+    if (!slider) return
+    
+    const cardWidth = slider.scrollWidth / 3
+    slider.scrollTo({
+      left: index * cardWidth,
+      behavior: 'smooth'
+    })
+    setCurrentCardIndex(index)
+  }
+
   // Toggle para el acordeón de FAQ
   const toggleFaq = (index: number) => {
     if (activeFaqIndex === index) {
@@ -231,8 +366,144 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [])
 
+  // Efecto para manejar el scroll del slider de cards en móvil
+  useEffect(() => {
+    const slider = sliderRef.current
+    if (!slider) return
+
+    const handleScroll = () => {
+      const scrollPosition = slider.scrollLeft
+      const cardWidth = slider.scrollWidth / 3
+      const newIndex = Math.round(scrollPosition / cardWidth)
+      setCurrentCardIndex(newIndex)
+    }
+
+    slider.addEventListener('scroll', handleScroll, { passive: true })
+    return () => slider.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Lightbox component
+  const Lightbox = () => {
+    if (!lightboxState.isOpen || !lightboxState.currentCategory) return null
+    
+    const currentImage = lightboxState.images[lightboxState.currentImageIndex]
+    const totalImages = lightboxState.images.length
+    
+    // Function to get category name for display
+    const getCategoryName = (category: string) => {
+      switch(category) {
+        case 'alimentaria': return 'Medidores convencionales'
+        case 'hogar': return 'Medidores inteligentes'
+        case 'hospitalaria': return 'Cajas de distribución'
+        default: return ''
+      }
+    }
+    
+    return (
+      <div 
+        className="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/90 backdrop-blur-sm" 
+        onClick={closeLightbox}
+      >
+        <div 
+          className="relative w-full max-w-6xl max-h-[80vh] flex flex-col h-full" 
+          onClick={e => e.stopPropagation()}
+        >
+          {/* Close button */}
+          <button 
+            onClick={closeLightbox}
+            className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors z-10"
+            aria-label="Cerrar galería"
+          >
+            <X size={32} />
+          </button>
+          
+          {/* Category title */}
+          <div className="text-white text-lg font-medium mb-4 text-center">
+            {getCategoryName(lightboxState.currentCategory)}
+          </div>
+          
+          {/* Main image container */}
+          <div className="relative flex-1 bg-black rounded-lg overflow-hidden">
+            <Image
+              src={currentImage.src}
+              alt={currentImage.alt}
+              fill
+              className="object-contain"
+              priority
+            />
+            
+            {/* Navigation arrows */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                navigateLightbox('prev')
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10"
+              aria-label="Imagen anterior"
+            >
+              <ChevronLeft size={28} />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                navigateLightbox('next')
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/70 transition-colors z-10"
+              aria-label="Siguiente imagen"
+            >
+              <ChevronRight size={28} />
+            </button>
+            
+            {/* Image counter */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-1.5 rounded-full text-sm">
+              {lightboxState.currentImageIndex + 1} / {totalImages}
+            </div>
+          </div>
+          
+          {/* Thumbnail navigation */}
+          <div className="mt-4 w-full overflow-x-auto pb-2">
+            <div className="flex space-x-2 px-2">
+              {lightboxState.images.map((img, idx) => (
+                <div 
+                  key={`${lightboxState.currentCategory}-${idx}`}
+                  className="relative flex-shrink-0"
+                >
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      goToImage(idx)
+                    }}
+                    className={`relative w-16 h-16 rounded-md overflow-hidden transition-all duration-200 border-2 ${
+                      idx === lightboxState.currentImageIndex
+                        ? 'border-yellow-400 scale-105' 
+                        : 'border-transparent opacity-70 hover:opacity-100 hover:border-white/50'
+                    }`}
+                    aria-label={`Ver imagen ${idx + 1}`}
+                  >
+                    <div className="relative w-full h-full">
+                      <Image 
+                        src={img.src} 
+                        alt="" 
+                        fill 
+                        className="object-cover"
+                        sizes="64px"
+                        priority={idx === lightboxState.currentImageIndex}
+                      />
+                    </div>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Lightbox */}
+      <Lightbox />
       {/* Fixed Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground">
         <div className="container max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -374,7 +645,8 @@ export default function Home() {
               Soluciones en <span className="whitespace-nowrap">Medidores de Luz</span> <span className="whitespace-nowrap">en Loja</span>
             </h1>
             <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-white/90">
-              Fabricación e instalación de cajas para medidores de luz digitales, recargables e inteligentes. Seguridad, calidad y cumplimiento garantizado.
+              <span className="hidden md:inline">Fabricación e instalación de cajas para medidores de luz digitales, recargables e inteligentes. Seguridad, calidad y cumplimiento garantizado.</span>
+              <span className="md:hidden">Fabricación e instalación de cajas para medidores de luz digitales, recargables e inteligentes.</span>
             </p>
             <a
               href="http://wa.me/593981014827"
@@ -443,7 +715,76 @@ export default function Home() {
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">Especialistas en soluciones eléctricas personalizadas para hogares y negocios en Loja y sus alrededores</p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {/* Mobile Slider */}
+            <div className="md:hidden mb-12 relative">
+              <div 
+                ref={sliderRef}
+                className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth -mx-4 px-4 pb-4"
+                style={{
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  WebkitOverflowScrolling: 'touch',
+                }}
+              >
+                {[0, 1, 2].map((index) => (
+                  <div key={index} className="flex-shrink-0 w-full px-2 snap-start">
+                    {index === 0 && (
+                      <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 mx-auto" style={{ maxWidth: '400px' }}>
+                        <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-xl font-bold mb-4 text-gray-900 text-center">Nuestra Misión</h3>
+                        <p className="text-gray-600 text-center">
+                          <span className="text-black">Proporcionar soluciones eléctricas innovadoras y confiables que mejoren la calidad de vida de nuestros clientes, garantizando siempre la máxima seguridad y eficiencia energética.</span>
+                        </p>
+                      </div>
+                    )}
+                    {index === 1 && (
+                      <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 mx-auto" style={{ maxWidth: '400px' }}>
+                        <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-xl font-bold mb-4 text-gray-900 text-center">10+ Años de Experiencia</h3>
+                        <p className="text-gray-600 text-center">
+                          <span className="text-black">Con más de una década en el mercado, hemos desarrollado el conocimiento y la experiencia necesarios para ofrecer soluciones eléctricas de la más alta calidad en toda la región.</span>
+                        </p>
+                      </div>
+                    )}
+                    {index === 2 && (
+                      <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 mx-auto" style={{ maxWidth: '400px' }}>
+                        <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <h3 className="text-xl font-bold mb-4 text-gray-900 text-center">Nuestro Compromiso</h3>
+                        <p className="text-gray-600 text-center">
+                          <span className="text-black">En Reubí Elec nos comprometemos con la satisfacción total de nuestros clientes, ofreciendo garantía en todos nuestros servicios y asesoramiento personalizado para cada necesidad.</span>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              {/* Dots indicator */}
+              <div className="flex justify-center mt-4 space-x-2">
+                {[0, 1, 2].map((dot) => (
+                  <button
+                    key={dot}
+                    onClick={() => scrollToCard(dot)}
+                    className={`w-2 h-2 rounded-full transition-colors ${dot === currentCardIndex ? 'bg-secondary w-4' : 'bg-gray-300'}`}
+                    aria-label={`Ir a tarjeta ${dot + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+            
+            {/* Desktop Grid */}
+            <div className="hidden md:grid md:grid-cols-3 gap-8 mb-16">
               {/* Misión */}
               <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-2">
                 <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -533,7 +874,7 @@ export default function Home() {
                 <div className="relative">
                   <div
                     ref={sliderRefs.alimentaria}
-                    className="aspect-w-16 aspect-h-9 bg-gray-100 touch-slider"
+                    className="relative w-full h-64 bg-gray-100 touch-slider overflow-hidden"
                     onTouchStart={handleTouchStart}
                     onTouchEnd={(e) => handleTouchEnd(e, "alimentaria")}
                   >
@@ -545,6 +886,18 @@ export default function Home() {
                         }`}
                       >
                         <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className="object-cover" />
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            openLightbox('alimentaria', index)
+                          }}
+                          className="absolute top-2 right-2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                          aria-label="Ver imagen en pantalla completa"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </button>
                       </div>
                     ))}
 
@@ -581,7 +934,7 @@ export default function Home() {
                 <div className="relative">
                   <div
                     ref={sliderRefs.hogar}
-                    className="aspect-w-16 aspect-h-9 bg-gray-100 touch-slider"
+                    className="relative w-full h-64 bg-gray-100 touch-slider overflow-hidden"
                     onTouchStart={handleTouchStart}
                     onTouchEnd={(e) => handleTouchEnd(e, "hogar")}
                   >
@@ -593,6 +946,18 @@ export default function Home() {
                         }`}
                       >
                         <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className="object-cover" />
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            openLightbox('hogar', index)
+                          }}
+                          className="absolute top-2 right-2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                          aria-label="Ver imagen en pantalla completa"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </button>
                       </div>
                     ))}
 
@@ -629,7 +994,7 @@ export default function Home() {
                 <div className="relative">
                   <div
                     ref={sliderRefs.hospitalaria}
-                    className="aspect-w-16 aspect-h-9 bg-gray-100 touch-slider"
+                    className="relative w-full h-64 bg-gray-100 touch-slider overflow-hidden"
                     onTouchStart={handleTouchStart}
                     onTouchEnd={(e) => handleTouchEnd(e, "hospitalaria")}
                   >
@@ -641,6 +1006,18 @@ export default function Home() {
                         }`}
                       >
                         <Image src={image.src || "/placeholder.svg"} alt={image.alt} fill className="object-cover" />
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            openLightbox('hospitalaria', index)
+                          }}
+                          className="absolute top-2 right-2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                          aria-label="Ver imagen en pantalla completa"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </button>
                       </div>
                     ))}
 
