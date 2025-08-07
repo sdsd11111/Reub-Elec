@@ -32,12 +32,19 @@ function Home() {
   const sliderRef = useRef<HTMLDivElement>(null)
   
   // Lightbox state for each service
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  
   const [lightboxState, setLightboxState] = useState({
     isOpen: false,
     currentImageIndex: 0,
     currentCategory: null as keyof typeof categoryImages | null,
     images: [] as {src: string, alt: string}[]
   })
+  
+  // Cerrar menú al hacer clic en un enlace
+  const closeMobileMenu = () => {
+    setIsMenuOpen(false)
+  }
   
   // Function to open lightbox with a specific image from a category
   const openLightbox = (category: keyof typeof categoryImages, index: number) => {
@@ -549,7 +556,7 @@ function Home() {
               Compartir
             </a>
             <a
-              href="http://wa.me/593981014827"
+              href="https://wa.me/593986286990"
               className="bg-secondary hover:bg-yellow-600 text-secondary-foreground py-2 px-4 rounded-md flex items-center gap-2 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
@@ -568,10 +575,104 @@ function Home() {
             </a>
           </div>
 
-          {/* Mobile - Solo logo, sin menú hamburguesa */}
-          <div className="md:hidden">{/* Intencionalmente vacío - eliminamos el menú hamburguesa */}</div>
+          {/* Mobile - Botón de menú hamburguesa */}
+          <div className="md:hidden flex items-center">
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-white focus:outline-none"
+              aria-label="Menú de navegación"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                {isMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
       </header>
+
+      {/* Menú móvil */}
+      <div className={`fixed inset-0 z-50 bg-black/50 transition-all duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} md:hidden`}>
+        <div className={`fixed left-0 top-0 h-full w-4/5 max-w-sm bg-primary/95 backdrop-blur-sm transition-transform duration-300 transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} p-6 flex flex-col`}>
+          <div className="flex justify-between items-center">
+            <Image
+              src="/images/Reubi Elec.jpg"
+              alt="Reubí Elec Logo"
+              width={180}
+              height={50}
+              className="h-12 w-auto"
+              priority
+            />
+            <button 
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white p-2"
+              aria-label="Cerrar menú"
+            >
+              <X size={24} />
+            </button>
+          </div>
+          
+          <nav className="flex-1 flex flex-col justify-center space-y-8">
+            <a 
+              href="#servicios" 
+              className="text-2xl font-medium text-white hover:text-secondary transition-colors"
+              onClick={closeMobileMenu}
+            >
+              Nuestros Servicios
+            </a>
+            <a 
+              href="#galeria" 
+              className="text-2xl font-medium text-white hover:text-secondary transition-colors"
+              onClick={closeMobileMenu}
+            >
+              Galería
+            </a>
+            <a 
+              href="#testimonios" 
+              className="text-2xl font-medium text-white hover:text-secondary transition-colors"
+              onClick={closeMobileMenu}
+            >
+              Testimonios
+            </a>
+            <a 
+              href="#por-que-elegirnos" 
+              className="text-2xl font-medium text-white hover:text-secondary transition-colors"
+              onClick={closeMobileMenu}
+            >
+              ¿Por qué elegirnos?
+            </a>
+            <a 
+              href="#contacto" 
+              className="text-2xl font-medium text-white hover:text-secondary transition-colors"
+              onClick={closeMobileMenu}
+            >
+              Contacto
+            </a>
+            <a
+              href="https://wa.me/593986286990"
+              className="mt-8 inline-flex items-center justify-center gap-2 bg-secondary hover:bg-yellow-600 text-secondary-foreground py-3 px-6 rounded-md text-lg font-medium transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMobileMenu}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="shrink-0"
+              >
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              WhatsApp
+            </a>
+          </nav>
+        </div>
+      </div>
 
       {/* WhatsApp Button Fixed para móvil */}
       <a
@@ -659,7 +760,7 @@ function Home() {
               <span className="md:hidden">Fabricación e instalación de cajas para medidores de luz digitales, recargables e inteligentes.</span>
             </p>
             <a
-              href="http://wa.me/593981014827"
+              href="https://wa.me/593986286990"
               className="inline-block bg-secondary hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-md text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
               target="_blank"
               rel="noopener noreferrer"
@@ -1326,7 +1427,7 @@ function Home() {
 
                   <div className="pt-4">
                     <a 
-                      href="https://wa.me/593995565303" 
+                      href="https://wa.me/593986286990" 
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/90 text-foreground font-medium py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
