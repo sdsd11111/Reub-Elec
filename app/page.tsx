@@ -395,11 +395,12 @@ export default function Home() {
               <div className="relative" style={{ paddingBottom: '177.78%' }}> {/* 9:16 Aspect Ratio for Reels */}
                 <video
                   className="absolute top-0 left-0 w-full h-full object-cover"
-                  src="/images/video.mp4"
+                  src="/images/Video.mp4"
                   title="Nuestros Proyectos en Acción"
                   controls
                   playsInline
                   style={{ objectFit: 'cover' }}
+                  preload="metadata"
                 >
                   Tu navegador no soporta el elemento de video.
                 </video>
