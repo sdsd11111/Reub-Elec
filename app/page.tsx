@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, type TouchEvent } from "react"
 import Image from "next/image"
-import { Share2, ChevronLeft, ChevronRight, X, Plus } from "lucide-react"
+import { Share2, ChevronLeft, ChevronRight, X, Plus, ChevronDown, MessageCircle, Send, MapPin, Phone, Clock, Mail, Map, PhoneCall, MessageSquare, Instagram, Facebook, Twitter } from "lucide-react"
 
 // Constantes para configuración
 const HERO_SLIDE_INTERVAL = 7000 // 7 segundos para el slider del hero
@@ -47,95 +47,97 @@ export default function Home() {
 
   // Imágenes para el hero slider
   const heroImages = [
-    { src: "/images/equipo-portada.jpg", alt: "Equipo METALCA - Profesionales metalmecánicos" },
-    { src: "/images/hogar-2.png", alt: "Escalera moderna con paneles de vidrio" },
-    { src: "/images/hospitalaria-1.png", alt: "Puertas de acero inoxidable para baños" },
-    { src: "/images/hospitalaria-3.png", alt: "Urinarios con divisores de acero inoxidable" }, // Replaced hogar-1.png
+    { src: "/images/Hero.jpg", alt: "Servicios eléctricos profesionales" },
+    { src: "/images/Hero 2.jpg", alt: "Instalaciones eléctricas seguras" },
+    { src: "/images/Hero 3.jpg", alt: "Soluciones eléctricas confiables" },
+    { src: "/images/Hero 4.jpeg", alt: "Expertos en instalaciones eléctricas" }
   ]
 
   // Imágenes para categorías específicas
   const categoryImages = {
+    // Medidores de luz digitales y convencionales
     alimentaria: [
-      { src: "/images/alimentaria-1.png", alt: "Campana extractora de acero inoxidable" },
-      { src: "/images/alimentaria-2.png", alt: "Parrilla de acero inoxidable" },
-      { src: "/images/alimentaria-3.png", alt: "Fachada de establecimiento de comida" },
+      { src: "/images/Medidores de luz digitales y convencionales 1.jpeg", alt: "Instalación de medidor convencional" },
+      { src: "/images/Medidores de luz digitales y convencionales 2.jpeg", alt: "Medidor convencional instalado" },
+      { src: "/images/Medidores de luz digitales y convencionales 3.jpeg", alt: "Instalación profesional de medidor" },
+      { src: "/images/Medidores de luz digitales y convencionales 4.jpeg", alt: "Trabajo en cuadro de medidores" },
     ],
+    // Medidores de luz recargables e inteligentes
     hogar: [
-      { src: "/images/hogar-1.png", alt: "Cocina exterior con encimeras de acero inoxidable" },
-      { src: "/images/hogar-2.png", alt: "Escalera moderna con paneles de vidrio" },
-      { src: "/images/hogar-3.png", alt: "Campana extractora con azulejos decorativos" },
+      { src: "/images/Medidores de luz recargables e inteligentes 1.jpeg", alt: "Medidor recargable moderno" },
+      { src: "/images/Medidores de luz recargables e inteligentes 2.jpeg", alt: "Instalación de medidor inteligente" },
+      { src: "/images/Medidores de luz recargables e inteligentes 3.jpg", alt: "Sistema de medición recargable" },
+      { src: "/images/Medidores de luz recargables e inteligentes 4.jpeg", alt: "Panel de control de medidor inteligente" },
     ],
+    // Cajas para agua potable, TV y telecomunicaciones
     hospitalaria: [
-      { src: "/images/hospitalaria-1.png", alt: "Puertas de acero inoxidable para baños" },
-      { src: "/images/hospitalaria-2.png", alt: "Lavamanos y puertas médicas de acero inoxidable" },
-      { src: "/images/hospitalaria-3.png", alt: "Urinarios con divisores de acero inoxidable" },
+      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 1.jpeg", alt: "Caja de distribución para servicios" },
+      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 2.jpeg", alt: "Instalación de caja de servicios" },
+      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 3.jpeg", alt: "Caja de distribución organizada" },
+      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 4.jpeg", alt: "Instalación profesional de cajas" },
+      { src: "/images/Cajas para agua potable, TV y telecomunicaciones 5.jpeg", alt: "Sistema de distribución completo" },
     ],
   }
 
   // Testimonios
   const testimonials = [
     {
-      name: "Restaurante El Dorado",
-      role: "Cliente Corporativo",
-      text: "El trabajo que realizó METALCA en nuestra cocina industrial superó todas nuestras expectativas. La calidad del acero inoxidable y los acabados son excelentes.",
-      image: "/images/alimentaria-1.png",
+      name: "Karina Mora",
+      role: "Loja",
+      text: "Excelente servicio. Me instalaron la caja para mi medidor de luz recargable en menos de un día. Todo quedó profesional y seguro.",
+      image: "/images/Clientes satisfechos.jpg",
     },
     {
-      name: "Familia Rodríguez",
-      role: "Cliente Residencial",
-      text: "Contratamos a METALCA para fabricar pasamanos y puertas para nuestro hogar. El resultado fue impecable y el servicio muy profesional.",
-      image: "/images/hogar-2.png",
+      name: "Luis Vázquez",
+      role: "Administrador de edificio",
+      text: "Tenía problemas con los medidores de mis inquilinos y Reubí Elec solucionó todo. Trabajo limpio y puntual.",
+      image: "/images/Clientes satisfechos 2.jpg",
     },
     {
-      name: "Clínica Santa Ana",
-      role: "Sector Salud",
-      text: "Las divisiones y puertas de acero inoxidable que instalaron en nuestras áreas críticas cumplen con todas las normativas sanitarias. Excelente trabajo.",
-      image: "/images/hospitalaria-2.png",
+      name: "Patricia Jiménez",
+      role: "Propietaria",
+      text: "Reubí Elec me ayudó a actualizar mi sistema a medidor digital. Muy buena atención y materiales de calidad.",
+      image: "/images/Clientes satisfechos 3.jpg",
     },
     {
-      name: "Cafetería Aroma",
-      role: "Negocio Local",
-      text: "La barra y estanterías que diseñaron para nuestra cafetería son perfectas. Además, el equipo de instalación fue muy profesional y cuidadoso.",
-      image: "/images/alimentaria-3.png",
+      name: "Jonathan Cabrera",
+      role: "Local comercial en el centro",
+      text: "Los contacté por WhatsApp, y en menos de 24 horas tenía mi caja instalada. 100% recomendados.",
+      image: "/images/Clientes satisfechos 4.jpg",
     },
   ]
 
   // Preguntas frecuentes
   const faqItems = [
     {
-      question: "¿Ofrecen garantía en sus productos de acero inoxidable?",
+      question: "¿Qué tipo de medidores instalan?",
       answer:
-        "Sí. En METALCA todos nuestros trabajos en acero inoxidable cuentan con garantía de durabilidad y resistencia, respaldados por controles de calidad constantes y personal altamente capacitado.",
+        "Instalamos cajas para medidores de luz convencionales, digitales, recargables e inteligentes, adaptándonos a sistemas monofásicos, bifásicos y trifásicos.",
     },
     {
-      question: "¿En cuánto tiempo entregan un proyecto a medida?",
+      question: "¿Puedo instalar un medidor de luz prepago en mi vivienda?",
       answer:
-        "Nuestro tiempo estándar de entrega es de 2 a 4 semanas, dependiendo de la complejidad. Le brindamos un cronograma detallado desde la cotización y actualizaciones semanales para que siempre esté informado.",
+        "Sí, ofrecemos soluciones adaptadas para medidores prepago, ideales para arrendamientos o control de consumo por inquilino.",
     },
     {
-      question: "¿Puedo visitar sus instalaciones en Cuenca?",
+      question: "¿Dónde están ubicados?",
       answer:
-        "Claro. Estamos ubicados en Av. Abelardo J. Andrade & Luis Pasteur. Puede agendar una visita de lunes a viernes, de 8:00 a 13:00 y 14:00 a 17:00, para conocer nuestro taller y ver avances en vivo.",
+        "Nos encontramos en Loja, Ecuador, junto a la EERSSA (calle Rocafuerte). Atendemos en toda la ciudad y zonas cercanas.",
     },
     {
-      question: "¿Trabajan con proyectos residenciales y comerciales?",
+      question: "¿Cuál es el costo de instalación?",
       answer:
-        "Sí. Tenemos experiencia tanto en la Línea Hogar (pasamanos, asadores) como en Industria Alimenticia (campanas, extractores) y Hospitalaria (lavamanos, puertas plomadas) desde 2018.",
+        "El precio depende del tipo de caja, medidor y ubicación. Solicita tu cotización sin compromiso por WhatsApp.",
     },
     {
-      question: "¿Cómo solicito una cotización?",
+      question: "¿Hacen instalaciones en casas, edificios y negocios?",
       answer:
-        "Puede llamarnos al +593 98 101 4827 o escribirnos por WhatsApp. Le pediremos detalles del proyecto y en 24 h le enviamos una propuesta con precios y plazos.",
+        "Sí, trabajamos con todo tipo de inmuebles: residencias, locales comerciales, departamentos, condominios y edificios institucionales.",
     },
     {
-      question: "¿Qué certificaciones o normas cumplen sus procesos?",
+      question: "¿Qué materiales usan para las cajas?",
       answer:
-        "Todos nuestros procesos siguen estándares ISO y normativas nacionales de calidad en metalmecánica, garantizando seguridad y eficiencia en cada producto.",
-    },
-    {
-      question: "¿Ofrecen instalación o solo fabricación?",
-      answer:
-        "METALCA brinda servicio integral: diseño, fabricación e instalación en sitio, a cargo de nuestro equipo profesional, para que no tenga que preocuparse por nada más.",
+        "Fabricamos en metal galvanizado y otros materiales resistentes a la intemperie, garantizando seguridad y durabilidad.",
     },
   ]
 
@@ -230,43 +232,44 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       {/* Fixed Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black text-white">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground">
         <div className="container max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
           <div>
             <Image
-              src="/images/metalca-logo-rectangular.jpg"
-              alt="METALCA Logo"
+              src="/images/Reubi Elec.jpg"
+              alt="Reubí Elec Logo"
               width={180}
-              height={40}
-              className="h-10 w-auto"
+              height={50}
+              className="h-12 w-auto"
+              priority
             />
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <a href="#servicios" className="hover:text-red-600 transition-colors">
+            <a href="#servicios" className="hover:text-secondary transition-colors">
               Servicios
             </a>
-            <a href="#testimonios" className="hover:text-red-600 transition-colors">
+            <a href="#testimonios" className="hover:text-secondary transition-colors">
               Testimonios
             </a>
-            <a href="#faq" className="hover:text-red-600 transition-colors">
+            <a href="#faq" className="hover:text-secondary transition-colors">
               FAQ
             </a>
             <a
               href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.metalca.ec"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-red-600 transition-colors flex items-center gap-2"
+              className="hover:text-secondary transition-colors flex items-center gap-2"
             >
               <Share2 size={18} />
               Compartir
             </a>
             <a
               href="http://wa.me/593981014827"
-              className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md flex items-center gap-2 transition-colors"
+              className="bg-secondary hover:bg-yellow-600 text-secondary-foreground py-2 px-4 rounded-md flex items-center gap-2 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -275,7 +278,7 @@ export default function Home() {
                 width="18"
                 height="18"
                 viewBox="0 0 24 24"
-                fill="white"
+                fill="secondary-foreground"
                 className="shrink-0"
               >
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -292,7 +295,7 @@ export default function Home() {
       {/* WhatsApp Button Fixed para móvil */}
       <a
         href="http://wa.me/593981014827"
-        className="md:hidden whatsapp-fixed bg-green-500 hover:bg-green-600 text-white p-3 rounded-full flex items-center justify-center"
+        className="md:hidden whatsapp-fixed bg-secondary hover:bg-yellow-600 text-secondary-foreground p-3 rounded-full flex items-center justify-center"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"
@@ -302,7 +305,7 @@ export default function Home() {
           width="28"
           height="28"
           viewBox="0 0 24 24"
-          fill="white"
+          fill="secondary-foreground"
           className="shrink-0"
         >
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -311,14 +314,14 @@ export default function Home() {
 
       <main>
         {/* Hero Section - Full Screen with Background Image and Slider */}
-        <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-black text-white">
+        <section id="inicio" className="relative min-h-screen flex items-center justify-center bg-none text-foreground">
           {/* Background Image Slider with Overlay */}
           <div className="absolute inset-0 z-0">
             {heroImages.map((image, index) => (
               <div
                 key={index}
                 className={`absolute inset-0 transition-opacity duration-1000 ${
-                  index === heroSlideIndex ? "opacity-50" : "opacity-0"
+                  index === heroSlideIndex ? "opacity-100" : "opacity-0"
                 }`}
               >
                 <Image
@@ -328,6 +331,9 @@ export default function Home() {
                   className="object-cover"
                   priority={index === 0}
                 />
+                {/* Dark overlay with subtle white overlay */}
+                <div className="absolute inset-0 bg-black/40"></div>
+                <div className="absolute inset-0 bg-white/5"></div>
               </div>
             ))}
           </div>
@@ -335,14 +341,14 @@ export default function Home() {
           {/* Navigation Arrows */}
           <button
             onClick={handlePrevHeroSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-accent/80 text-white p-2 rounded-full hover:bg-accent transition-colors"
             aria-label="Imagen anterior"
           >
             <ChevronLeft size={24} />
           </button>
           <button
             onClick={handleNextHeroSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-accent/80 text-white p-2 rounded-full hover:bg-accent transition-colors"
             aria-label="Imagen siguiente"
           >
             <ChevronRight size={24} />
@@ -355,7 +361,7 @@ export default function Home() {
                 key={index}
                 onClick={() => setHeroSlideIndex(index)}
                 className={`w-3 h-3 rounded-full transition-colors ${
-                  index === heroSlideIndex ? "bg-red-600" : "bg-white/50 hover:bg-white/80"
+                  index === heroSlideIndex ? "bg-secondary" : "bg-white/50 hover:bg-white/80"
                 }`}
                 aria-label={`Ir a imagen ${index + 1}`}
               />
@@ -363,14 +369,16 @@ export default function Home() {
           </div>
 
           {/* Content */}
-          <div className="container max-w-screen-xl mx-auto px-4 text-center relative z-10 pt-20">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Confianza y tranquilidad con METALCA</h1>
-            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
-              Precios a tu alcance y un trabajo garantizado.
+          <div className="container max-w-screen-xl mx-auto px-4 text-center relative z-10 pt-16 md:pt-24">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-extrabold mb-8 text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] leading-tight">
+              Soluciones en <span className="whitespace-nowrap">Medidores de Luz</span> <span className="whitespace-nowrap">en Loja</span>
+            </h1>
+            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-white/90">
+              Fabricación e instalación de cajas para medidores de luz digitales, recargables e inteligentes. Seguridad, calidad y cumplimiento garantizado.
             </p>
             <a
               href="http://wa.me/593981014827"
-              className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-md text-lg transition-colors"
+              className="inline-block bg-secondary hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-md text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -383,14 +391,120 @@ export default function Home() {
         <section id="casos-exito-video" className="bg-white py-16">
           <div className="container max-w-screen-xl mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">Nuestros Proyectos en Acción</h2>
-            <div className="max-w-screen-lg mx-auto aspect-w-16 aspect-h-9 rounded-lg shadow-md overflow-hidden">
-              <iframe
-                src="https://www.youtube.com/embed/cnMoGlXlbEE"
-                title="METALCA - Proyectos en Acción"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
+            <div className="w-full max-w-md mx-auto mt-12 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative" style={{ paddingBottom: '177.78%' }}> {/* 9:16 Aspect Ratio for Reels */}
+                <video
+                  className="absolute top-0 left-0 w-full h-full object-cover"
+                  src="/images/video.mp4"
+                  title="Nuestros Proyectos en Acción"
+                  controls
+                  playsInline
+                  style={{ objectFit: 'cover' }}
+                >
+                  Tu navegador no soporta el elemento de video.
+                </video>
+                {/* Instagram-like controls overlay */}
+                <div className="absolute inset-0 flex flex-col justify-between p-4 pointer-events-none">
+                  <div className="flex justify-between w-full">
+                    <div className="bg-black/30 backdrop-blur-sm rounded-full p-2 pointer-events-auto">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div className="bg-black/30 backdrop-blur-sm rounded-full p-2 pointer-events-auto">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm0 14a6 6 0 110-12 6 6 0 010 12z" />
+                        <path d="M10 12a1 1 0 100-2 1 1 0 000 2z" />
+                        <path d="M10 9a1 1 0 01-1-1V6a1 1 0 112 0v2a1 1 0 01-1 1z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="flex justify-center space-x-4 mb-4">
+                    <button className="bg-transparent border-2 border-white rounded-full p-3 pointer-events-auto hover:bg-white/20 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quiénes Somos Section */}
+        <section id="quienes-somos" className="bg-gray-50 py-20">
+          <div className="container max-w-screen-xl mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Quiénes Somos</h2>
+              <div className="w-20 h-1 bg-secondary mx-auto mb-6"></div>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">Especialistas en soluciones eléctricas personalizadas para hogares y negocios en Loja y sus alrededores</p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+              {/* Misión */}
+              <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-2">
+                <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-4 text-gray-900">Nuestra Misión</h3>
+                <p className="text-gray-600">
+                  <span className="text-black">Proporcionar soluciones eléctricas innovadoras y confiables que mejoren la calidad de vida de nuestros clientes, garantizando siempre la máxima seguridad y eficiencia energética.</span>
+                </p>
+              </div>
+              
+              {/* Experiencia */}
+              <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-2">
+                <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-4 text-gray-900">10+ Años de Experiencia</h3>
+                <p className="text-gray-600">
+                  <span className="text-black">Con más de una década en el mercado, hemos desarrollado el conocimiento y la experiencia necesarios para ofrecer soluciones eléctricas de la más alta calidad en toda la región.</span>
+                </p>
+              </div>
+              
+              {/* Compromiso */}
+              <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-2">
+                <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-4 text-gray-900">Nuestro Compromiso</h3>
+                <p className="text-gray-600">
+                  <span className="text-black">En Reubí Elec nos comprometemos con la satisfacción total de nuestros clientes, ofreciendo garantía en todos nuestros servicios y asesoramiento personalizado para cada necesidad.</span>
+                </p>
+              </div>
+            </div>
+            
+            {/* Sobre Nosotros */}
+            <div className="max-w-5xl mx-auto bg-white p-8 md:p-10 rounded-xl shadow-md">
+              <h3 className="text-2xl font-semibold mb-6 text-gray-900 text-center">Sobre Nosotros</h3>
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <p className="text-gray-600 mb-4">
+                    <span className="text-black">En Reubí Elec nos especializamos en la instalación y mantenimiento de medidores de luz, cajas de distribución y soluciones eléctricas para hogares y negocios. Nuestro equipo de técnicos certificados garantiza un servicio profesional y de calidad.</span>
+                  </p>
+                  <p className="text-black">
+                    Nos enorgullece ofrecer soluciones personalizadas que se adaptan a las necesidades específicas de cada cliente, asegurando la máxima eficiencia energética y seguridad en cada instalación.
+                  </p>
+                </div>
+                <div className="relative h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+                  <Image 
+                    src="/images/Sobre Nosotros.jpg" 
+                    alt="Equipo de trabajo de Reubí Elec" 
+                    fill 
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -398,19 +512,19 @@ export default function Home() {
         {/* Services Section with Sliders */}
         <section id="servicios" className="bg-gray-100 py-16">
           <div className="container max-w-screen-xl mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">Nuestros Servicios Metalmecánicos</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-6">Nuestros Servicios</h2>
             <p className="text-lg text-gray-600 text-center mb-12 max-w-3xl mx-auto">
-              Diseño y fabricación en acero inoxidable con los más altos estándares de calidad
+              Soluciones técnicas confiables y seguras
             </p>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {/* Service Card 1 - Industria Alimenticia */}
+              {/* Service Card 1 - Medidores de luz digitales y convencionales */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="p-6">
-                  <div className="text-5xl text-red-600 text-center mb-4">⚙️</div>
-                  <h3 className="text-xl font-bold text-center mb-3">Industria Alimenticia</h3>
+                  <div className="text-5xl text-primary text-center mb-4">🔌</div>
+                  <h3 className="text-xl font-bold text-center mb-3">Medidores de luz digitales y convencionales</h3>
                   <p className="text-gray-600 text-center">
-                    Campanas, extractores, mesas de trabajo, lavaderos, estanterías y equipamiento especializado.
+                    Instalamos cajas metálicas y plásticas para sistemas monofásicos, bifásicos o trifásicos.
                   </p>
                 </div>
 
@@ -436,14 +550,14 @@ export default function Home() {
                     {/* Navigation Arrows */}
                     <button
                       onClick={() => handlePrevSlide("alimentaria")}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-red-600 text-white p-1.5 rounded-full hover:bg-red-700 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-secondary text-secondary-foreground p-1.5 rounded-full hover:bg-yellow-600 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
                       aria-label="Imagen anterior"
                     >
                       <ChevronLeft size={18} />
                     </button>
                     <button
                       onClick={() => handleNextSlide("alimentaria")}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-red-600 text-white p-1.5 rounded-full hover:bg-red-700 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-secondary text-secondary-foreground p-1.5 rounded-full hover:bg-yellow-600 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
                       aria-label="Imagen siguiente"
                     >
                       <ChevronRight size={18} />
@@ -452,13 +566,13 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Service Card 2 - Línea Hogar */}
+              {/* Service Card 2 - Medidores de luz recargables e inteligentes */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="p-6">
-                  <div className="text-5xl text-red-600 text-center mb-4">🏠</div>
-                  <h3 className="text-xl font-bold text-center mb-3">Línea Hogar</h3>
+                  <div className="text-5xl text-primary text-center mb-4">⚡</div>
+                  <h3 className="text-xl font-bold text-center mb-3">Medidores de luz recargables e inteligentes</h3>
                   <p className="text-gray-600 text-center">
-                    Pasamanos, asadores, puertas, ventanas, escaleras y soluciones personalizadas para el hogar.
+                    Adaptamos tu red eléctrica a medidores de luz modernos y sistemas de prepago.
                   </p>
                 </div>
 
@@ -484,14 +598,14 @@ export default function Home() {
                     {/* Navigation Arrows */}
                     <button
                       onClick={() => handlePrevSlide("hogar")}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-red-600 text-white p-1.5 rounded-full hover:bg-red-700 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-secondary text-secondary-foreground p-1.5 rounded-full hover:bg-yellow-600 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
                       aria-label="Imagen anterior"
                     >
                       <ChevronLeft size={18} />
                     </button>
                     <button
                       onClick={() => handleNextSlide("hogar")}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-red-600 text-white p-1.5 rounded-full hover:bg-red-700 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-secondary text-secondary-foreground p-1.5 rounded-full hover:bg-yellow-600 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
                       aria-label="Imagen siguiente"
                     >
                       <ChevronRight size={18} />
@@ -500,13 +614,13 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Service Card 3 - Línea Hospitalaria */}
+              {/* Service Card 3 - Cajas para agua potable, TV y telecomunicaciones */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div className="p-6">
-                  <div className="text-5xl text-red-600 text-center mb-4">🏥</div>
-                  <h3 className="text-xl font-bold text-center mb-3">Línea Hospitalaria</h3>
+                  <div className="text-5xl text-primary text-center mb-4">📦</div>
+                  <h3 className="text-xl font-bold text-center mb-3">Cajas para agua potable, TV y telecomunicaciones</h3>
                   <p className="text-gray-600 text-center">
-                    Lavamanos, puertas, divisiones, mobiliario y equipamiento especializado para centros médicos.
+                    Fabricación a medida de cajas seguras para diferentes tipos de servicios públicos.
                   </p>
                 </div>
 
@@ -532,14 +646,14 @@ export default function Home() {
                     {/* Navigation Arrows */}
                     <button
                       onClick={() => handlePrevSlide("hospitalaria")}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-red-600 text-white p-1.5 rounded-full hover:bg-red-700 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-secondary text-secondary-foreground p-1.5 rounded-full hover:bg-yellow-600 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
                       aria-label="Imagen anterior"
                     >
                       <ChevronLeft size={18} />
                     </button>
                     <button
                       onClick={() => handleNextSlide("hospitalaria")}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-red-600 text-white p-1.5 rounded-full hover:bg-red-700 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-secondary text-secondary-foreground p-1.5 rounded-full hover:bg-yellow-600 transition-colors shadow-md w-8 h-8 flex items-center justify-center"
                       aria-label="Imagen siguiente"
                     >
                       <ChevronRight size={18} />
@@ -572,11 +686,11 @@ export default function Home() {
                   </div>
 
                   {/* Content */}
-                  <div className="relative z-10 p-6 flex flex-col h-full justify-end text-white">
-                    <p className="italic mb-4 line-clamp-4">{testimonial.text}</p>
+                  <div className="relative z-10 p-6 flex flex-col h-full justify-end">
+                    <p className="italic mb-4 line-clamp-4" style={{ color: '#FFFFFF' }}>{testimonial.text}</p>
                     <div>
-                      <p className="font-bold text-lg">{testimonial.name}</p>
-                      <p className="text-sm text-gray-300">{testimonial.role}</p>
+                      <p className="font-bold text-lg" style={{ color: '#FFFFFF' }}>{testimonial.name}</p>
+                      <p className="text-sm" style={{ color: '#FFFFFF' }}>{testimonial.role}</p>
                     </div>
                   </div>
                 </div>
@@ -598,23 +712,23 @@ export default function Home() {
                       index === mobileTestimonialIndex ? "opacity-100 z-10" : "opacity-0 z-0"
                     }`}
                   >
-                    {/* Background Image with Overlay */}
-                    <div className="absolute inset-0">
-                      <Image
-                        src={testimonial.image || "/placeholder.svg"}
-                        alt={`${testimonial.name} - Cliente METALCA`}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-black/60"></div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative z-10 p-6 flex flex-col h-full justify-end text-white">
-                      <p className="italic mb-4">{testimonial.text}</p>
-                      <div>
-                        <p className="font-bold text-lg">{testimonial.name}</p>
-                        <p className="text-sm text-gray-300">{testimonial.role}</p>
+                    <div className="bg-white p-6 rounded-lg shadow-md relative">
+                      <div className="absolute -top-4 -left-4 text-4xl text-primary">"</div>
+                      <p className="mb-4" style={{ color: '#000000' }}>{testimonial.text}</p>
+                      <div className="flex items-center">
+                        <div className="w-12 h-12 rounded-full bg-accent/20 mr-4 overflow-hidden flex items-center justify-center">
+                          <Image
+                            src={testimonial.image || "/placeholder-user.jpg"}
+                            alt={testimonial.name}
+                            width={48}
+                            height={48}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-bold" style={{ color: '#000000' }}>{testimonial.name}</p>
+                          <p className="text-sm" style={{ color: '#000000' }}>{testimonial.role}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -656,27 +770,31 @@ export default function Home() {
             </p>
 
             <div className="space-y-4">
-              {faqItems.map((item, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg overflow-hidden">
-                  <button
-                    onClick={() => toggleFaq(index)}
-                    className="flex justify-between items-center w-full p-4 text-left bg-gray-50 hover:bg-gray-100 transition-colors"
-                    aria-expanded={activeFaqIndex === index}
-                    aria-controls={`faq-answer-${index}`}
-                  >
-                    <h3 className="text-lg font-medium">{item.question}</h3>
-                    <span className="text-red-600 flex-shrink-0 ml-4">
-                      {activeFaqIndex === index ? <X size={20} /> : <Plus size={20} />}
-                    </span>
+              {faqItems.map((faq, index) => (
+                <div
+                  key={index}
+                  className="border-b border-accent/20 pb-4 mb-4"
+                  onClick={() => toggleFaq(index)}
+                >
+                  <button className="w-full flex justify-between items-center text-left group">
+                    <h4 className="font-medium text-lg text-accent group-hover:text-primary transition-colors">
+                      {faq.question}
+                    </h4>
+                    <div className="p-1 rounded-full group-hover:bg-accent/10 transition-colors">
+                      <ChevronDown
+                        size={20}
+                        className={`transition-transform duration-200 text-accent ${
+                          activeFaqIndex === index ? "transform rotate-180" : ""
+                        }`}
+                      />
+                    </div>
                   </button>
                   <div
-                    id={`faq-answer-${index}`}
                     className={`overflow-hidden transition-all duration-300 ${
-                      activeFaqIndex === index ? "max-h-96 p-4" : "max-h-0"
+                      activeFaqIndex === index ? "max-h-96 mt-3 opacity-100" : "max-h-0 opacity-0"
                     }`}
-                    aria-hidden={activeFaqIndex !== index}
                   >
-                    <p className="text-gray-600">{item.answer}</p>
+                    <p className="text-muted-foreground">{faq.answer}</p>
                   </div>
                 </div>
               ))}
@@ -704,111 +822,218 @@ export default function Home() {
         {/* Contact Section */}
         <section id="contacto" className="bg-white py-16">
           <div className="container max-w-screen-xl mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-12 items-start">
+            <h2 className="text-3xl font-bold text-center mb-12">Contáctanos</h2>
+            <div className="grid md:grid-cols-2 gap-8 items-start">
               {/* Contact Info */}
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">Contáctanos</h2>
-                <p className="text-lg text-gray-600 mb-8">
-                  Estamos listos para ayudarte con tu próximo proyecto. Contáctanos para una cotización personalizada.
-                </p>
-
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Ubicación</h3>
-                    <p className="text-gray-600">Av. Abelardo J. Andrade &, Luis Pasteur</p>
+              <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                <h3 className="text-2xl font-bold text-primary mb-8 pb-4 border-b border-gray-200">Información de Contacto</h3>
+                <div className="space-y-8">
+                  {/* Location */}
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-blue-50 p-3 rounded-full text-primary">
+                      <MapPin size={20} className="text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-1">TRABAJAMOS EN LOJA, ECUADOR Y ALREDEDORES</h3>
+                    </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Horario de Atención</h3>
-                    <p className="text-gray-600">
-                      Lunes a Viernes: 8:00 AM - 6:00 PM
-                      <br />
-                      Sábados: 8:00 AM - 1:00 PM
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Teléfono / WhatsApp</h3>
-                    <div className="space-y-1">
-                      <a href="tel:+593981014827" className="text-red-600 hover:underline block">
-                        +593 98 101 4827
-                      </a>
-                      <a
-                        href="http://wa.me/593981014827"
-                        className="text-red-600 hover:underline block"
+                  {/* WhatsApp */}
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-green-50 p-3 rounded-full text-green-600">
+                      <MessageSquare size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-1">ESCRÍBENOS DIRECTO POR WHATSAPP</h3>
+                      <a 
+                        href="https://wa.me/593986286990" 
+                        className="text-primary hover:underline inline-block mt-1 text-base font-medium transition-colors"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        WhatsApp: +593 98 101 4827
+                        👉 Enviar mensaje ahora
                       </a>
                     </div>
                   </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Síguenos</h3>
-                    <div className="flex space-x-4">
-                      <a
-                        href="https://www.instagram.com/metalcainox/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-red-600 transition-colors"
+                  {/* Phone */}
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-blue-50 p-3 rounded-full text-primary">
+                      <PhoneCall size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-1">LLÁMANOS DIRECTAMENTE</h3>
+                      <a 
+                        href="tel:+593986286990" 
+                        className="text-black hover:text-primary transition-colors text-base font-medium"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
-                      </a>
-                      <a
-                        href="https://www.facebook.com/metalcainox"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-red-600 transition-colors"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                        </svg>
+                        +593 98 628 6990
                       </a>
                     </div>
+                  </div>
+
+                  {/* Address */}
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-blue-50 p-3 rounded-full text-primary">
+                      <Map size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">UBICACIÓN FÍSICA</h3>
+                      <p className="text-black mb-3">
+                        Estamos junto a la EERSSA, calle Rocafuerte entre Olmedo y Juan José Peña, Loja, Ecuador.
+                        <span className="block text-sm text-gray-800 mt-1">(Referencia: Edificio Radio Luz y Vida)</span>
+                      </p>
+                      <a 
+                        href="https://maps.app.goo.gl/bchRSYV3vRmSZXhz7" 
+                        className="inline-flex items-center text-primary hover:text-primary/80 font-medium transition-colors"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <MapPin size={16} className="mr-1" /> Ver en Google Maps
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Social Media */}
+                  <div className="flex items-start space-x-4">
+                    <div className="bg-blue-50 p-3 rounded-full text-primary">
+                      <Share2 size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-3">SÍGUENOS</h3>
+                      <div className="flex space-x-4">
+                        <a 
+                          href="https://facebook.com/reubielec" 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-gray-100 hover:bg-blue-100 p-2 rounded-full text-blue-600 transition-colors"
+                          aria-label="Facebook"
+                        >
+                          <Facebook size={20} />
+                        </a>
+                        <a 
+                          href="https://instagram.com/reubielec" 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-gray-100 hover:bg-pink-100 p-2 rounded-full text-pink-600 transition-colors"
+                          aria-label="Instagram"
+                        >
+                          <Instagram size={20} />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3">
+                    <span className="text-xl mt-1">📩</span>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-1">Horarios y atención</h3>
+                      <p className="text-gray-600">
+                        Lunes a Sábado — 8h00 a 18h00
+                        <br />
+                        <span className="text-sm">Contáctanos fuera de horario y te responderemos a la brevedad.</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <a 
+                      href="https://wa.me/593995565303" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/90 text-foreground font-medium py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      ¡Solicita tu instalación ahora!
+                    </a>
                   </div>
                 </div>
               </div>
+              
+              {/* Contact Form */}
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-semibold mb-4">Envíanos un mensaje</h3>
+                <form className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Nombre completo
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      Correo electrónico
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Teléfono
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                      Mensaje
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500"
+                      required
+                    ></textarea>
+                  </div>
+                  <div>
+                    <button
+                      type="submit"
+                      className="w-full bg-secondary hover:bg-secondary/90 text-foreground font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                    >
+                      <Send className="w-4 h-4" />
+                      Enviar mensaje
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
 
-              {/* Map */}
-              <div>
-                <h3 className="text-2xl font-bold mb-6">Encuéntranos Aquí</h3>
-                <div className="aspect-w-16 aspect-h-9 rounded-lg shadow overflow-hidden">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d996.1899814134364!2d-79.01380053060126!3d-2.8854484604457475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91cd1706da1061a1%3A0x4029a8219c9f62c3!2sMetalca%20Inox!5e0!3m2!1ses!2sec!4v1747319376740!5m2!1ses!2sec"
-                    width="600"
-                    height="450"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Ubicación de METALCA"
-                    className="w-full h-full"
-                  ></iframe>
+            {/* Map Section - Full width below the two columns */}
+            <div className="mt-16 w-full">
+              <div className="w-full flex justify-center">
+                <h3 className="text-2xl font-bold mb-8 text-center inline-block">Encuéntranos Aquí</h3>
+              </div>
+              <div className="relative w-full px-2 md:px-8">
+                <div className="relative" style={{ paddingBottom: '40%' }}>
+                  <div className="absolute inset-0 rounded-2xl shadow-2xl overflow-hidden mx-auto w-full">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.682123456789!2d-79.01380053060126!3d-2.8854484604457475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwNTMnMDcuNiJTIDc5wrAwMScwOS43Ilc!5e0!3m2!1ses!2sec!4v1620000000000!5m2!1ses!2sec&markers=color:red%7C-2.8854485%2C-79.0138005"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Ubicación de Reubí Elec"
+                      className="absolute inset-0 w-full h-full"
+                    ></iframe>
+                  </div>
                 </div>
               </div>
             </div>
@@ -817,22 +1042,13 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black text-gray-400 py-6">
+      <footer className="bg-primary text-white py-6">
         <div className="container max-w-screen-xl mx-auto px-4 text-center">
-          <p className="text-sm mb-2">© 2024 METALCA. Todos los derechos reservados.</p>
           <p className="text-sm">
-            Diseñado por{" "}
-            <a
-              href="https://cesarreyesjaramillo.com/"
-              target="_blank"
-              rel="noreferrer noopener"
-              className="hover:text-white transition-colors"
-            >
-              Automatizotunegocio
-            </a>
+            Diseñado por @cesarreyesjaramillo.com 2025 Reubí Elec. Todos los derechos reservados.
           </p>
         </div>
       </footer>
-    </>
+    </div>
   )
 }

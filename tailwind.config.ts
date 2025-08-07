@@ -26,6 +26,7 @@ const config: Config = {
         title: ["AvilockBold", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       colors: {
+        // Colores base que usan variables CSS
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -37,48 +38,48 @@ const config: Config = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#0050F5", // Azul eléctrico
+          foreground: "#FFFFFF", // Blanco para texto sobre azul
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#FFDC00", // Amarillo rayo
+          foreground: "#000000", // Negro para texto sobre amarillo
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#012F6B", // Azul oscuro
+          foreground: "#FFFFFF", // Blanco para texto sobre azul oscuro
+        },
+        muted: {
+          DEFAULT: "#B3B3B3", // Gris metálico
+          foreground: "#000000", // Negro para texto sobre gris
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "#EF4444", // Rojo para acciones destructivas
+          foreground: "#FFFFFF",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
+          "1": "#0050F5", // Azul eléctrico
+          "2": "#FFDC00", // Amarillo rayo
+          "3": "#012F6B", // Azul oscuro
+          "4": "#B3B3B3", // Gris metálico
+          "5": "#25D366", // Verde WhatsApp
         },
         sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+          DEFAULT: "#0050F5", // Azul eléctrico
+          foreground: "#FFFFFF",
+          primary: "#FFDC00", // Amarillo rayo
+          "primary-foreground": "#000000",
+          accent: "#F3F4F6",
+          "accent-foreground": "#000000",
+          border: "#E5E7EB",
+          ring: "#0050F5", // Azul eléctrico
         },
-        red: {
-          600: "#FF0000", // METALCA primary red
-          700: "#D10000", // Darker red for hover states
+        whatsapp: {
+          DEFAULT: "#25D366", // Verde WhatsApp
+          foreground: "#FFFFFF", // Blanco para texto sobre verde
         },
       },
       borderRadius: {
