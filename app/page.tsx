@@ -7,7 +7,7 @@ import { Share2, ChevronLeft, ChevronRight, X, Plus, ChevronDown, MessageCircle,
 // Constantes para configuración
 const HERO_SLIDE_INTERVAL = 7000 // 7 segundos para el slider del hero
 
-export default function Home() {
+function Home() {
   // Estados para el formulario
   const [formData, setFormData] = useState({
     name: '',
@@ -1342,7 +1342,6 @@ export default function Home() {
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold mb-4">Envíanos un mensaje</h3>
                 <form 
-                  className="space-y-4" 
                   onSubmit={async (e) => {
                     e.preventDefault();
                     setIsSubmitting(true);
@@ -1374,6 +1373,7 @@ export default function Home() {
                       setIsSubmitting(false);
                     }
                   }}
+                  className="space-y-4"
                 >
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -1445,7 +1445,9 @@ export default function Home() {
                         isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
                       }`}
                     >
-                      {isSubmitting ? 'Enviando...' : (
+                      {isSubmitting ? (
+                        'Enviando...'
+                      ) : (
                         <>
                           <Send className="w-4 h-4" />
                           Enviar mensaje
@@ -1495,3 +1497,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home

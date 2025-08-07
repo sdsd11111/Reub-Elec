@@ -1,41 +1,54 @@
-﻿import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import path from 'path';
+
+// Ruta donde se guardarán los mensajes
+const MESSAGES_FILE = path.join(process.cwd(), 'messages.json');
 
 export async function POST(request: Request) {
   const { name, email, phone, message } = await request.json();
-
-  const transporter = nodemailer.createTransport({
-    host: 'cajademedidordeluz.com',  // Cambiado de mail.cajademedidordeluz.com a cajademedidordeluz.com
-    port: 465,
-    secure: true,
-    auth: {
-      user: 'Email@cajademedidordeluz.com',
-      pass: 'Go_qUGab9Zk7',
-    },
-    tls: {
-      rejectUnauthorized: false  // Para pruebas iniciales
-    }
-  });
-
+  const timestamp = new Date().toISOString();
+  
   try {
-    await transporter.sendMail({
-      from: `"Formulario de Contacto" <Email@cajademedidordeluz.com>`,
-      to: 'Email@cajademedidordeluz.com',
-      subject: `Nuevo mensaje de ${name}`,
-      html: `
-        <p><strong>Nombre:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Teléfono:</strong> ${phone || 'No proporcionado'}</p>
-        <p><strong>Mensaje:</strong></p>
-        <p>${message}</p>
-      `,
+    // Leer mensajes existentes
+    let messages = [];
+    try {
+      const fileContent = await fs.readFile(MESSAGES_FILE, 'utf8');
+      messages = JSON.parse(fileContent);
+    } catch (error) {
+      // Si el archivo no existe, se creará con el primer mensaje
+      console.log('Creando nuevo archivo de mensajes...');
+    }
+    
+    // Agregar nuevo mensaje
+    const newMessage = {
+      id: Date.now(),
+      timestamp,
+      name,
+      email,
+      phone: phone || 'No proporcionado',
+      message
+    };
+    
+    messages.push(newMessage);
+    
+    // Guardar mensajes en el archivo
+    await fs.writeFile(MESSAGES_FILE, JSON.stringify(messages, null, 2));
+    
+    console.log('Mensaje guardado:', newMessage);
+    
+    return NextResponse.json({ 
+      message: 'Mensaje recibido correctamente. ¡Gracias por contactarnos!',
+      debug: 'Los mensajes se están guardando localmente mientras se soluciona el envío por correo.'
     });
-
-    return NextResponse.json({ message: 'Mensaje enviado correctamente' });
+    
   } catch (error) {
-    console.error('Error al enviar el correo:', error);
+    console.error('Error al guardar el mensaje:', error);
     return NextResponse.json(
-      { error: 'Error al enviar el mensaje: ' + error.message },
+      { 
+        error: 'Error al procesar el mensaje',
+        details: error.message 
+      },
       { status: 500 }
     );
   }
