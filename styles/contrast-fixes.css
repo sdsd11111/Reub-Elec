@@ -1,0 +1,90 @@
+/* Mejoras de contraste para textos en toda la web */
+
+/* Texto claro sobre fondos claros */
+.bg-white .text-white,
+.bg-gray-50 .text-white,
+.bg-gray-100 .text-white,
+.bg-gray-200 .text-white,
+.bg-primary-50 .text-white,
+.bg-secondary-50 .text-white,
+.text-white:not(.bg-primary):not(.bg-accent):not(.bg-dark) {
+  color: #000 !important; /* Negro puro para mejor contraste */
+}
+
+/* Texto oscuro sobre fondos oscuros */
+.bg-primary .text-foreground:not(.text-white),
+.bg-accent .text-foreground:not(.text-white),
+.bg-gray-800 .text-foreground:not(.text-white),
+.bg-gray-900 .text-foreground:not(.text-white),
+.dark .text-foreground:not(.text-white) {
+  color: #fff !important; /* Blanco para mejor contraste */
+}
+
+/* Mejoras específicas para la sección de contacto */
+#contacto .text-gray-600 {
+  color: #4a4a4a !important; /* Gris más oscuro para mejor legibilidad */
+}
+
+#contacto .text-sm {
+  color: #5a5a5a !important; /* Gris ligeramente más oscuro para texto pequeño */
+}
+
+/* Mejoras para enlaces */
+.text-red-600 {
+  color: #d40000 !important; /* Rojo más oscuro para mejor contraste */
+}
+
+/* Mejoras para texto en tarjetas */
+.bg-white .text-muted-foreground,
+.bg-white .text-gray-500 {
+  color: #4a4a4a !important; /* Texto más oscuro sobre fondos claros */
+}
+
+/* Ajustes para modo oscuro */
+.dark .bg-card .text-muted-foreground,
+.dark .bg-card .text-gray-500 {
+  color: #e0e0e0 !important; /* Texto más claro sobre fondos oscuros */
+}
+
+/* Mejoras para texto en botones */
+.bg-secondary {
+  --tw-text-opacity: 1 !important;
+  color: rgba(0, 0, 0, var(--tw-text-opacity)) !important; /* Texto negro en botones amarillos */
+}
+
+.bg-primary, .bg-accent {
+  --tw-text-opacity: 1 !important;
+  color: rgba(255, 255, 255, var(--tw-text-opacity)) !important; /* Texto blanco en botones oscuros */
+}
+
+/* Mejoras para textos en formularios */
+input::placeholder,
+textarea::placeholder {
+  color: #666 !important; /* Placeholder más oscuro */
+  opacity: 1 !important;
+}
+
+/* Asegurar que los textos en tarjetas tengan buen contraste */
+.card, .bg-card {
+  --tw-text-opacity: 1 !important;
+  color: rgba(0, 0, 0, var(--tw-text-opacity)) !important;
+}
+
+/* Mejoras para textos en el pie de página */
+footer a:not(.btn) {
+  color: #e0e0e0 !important; /* Texto más claro en el pie de página */
+  text-decoration: underline;
+}
+
+/* Ajustes para texto en banners y alertas */
+.banner, .alert {
+  --tw-text-opacity: 1 !important;
+  color: rgba(0, 0, 0, var(--tw-text-opacity)) !important;
+}
+
+/* Mejoras para textos en tooltips */
+.tooltip {
+  --tw-text-opacity: 1 !important;
+  color: rgba(255, 255, 255, var(--tw-text-opacity)) !important;
+  background-color: #333 !important;
+}
